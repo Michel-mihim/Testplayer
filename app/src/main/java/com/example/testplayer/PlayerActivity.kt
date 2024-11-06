@@ -23,7 +23,8 @@ class PlayerActivity : Activity() {
     private lateinit var play: Button
     private var mediaPlayer = MediaPlayer()
 
-    private var url: String? = "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/ac/c7/d1/acc7d13f-6634-495f-caf6-491eccb505e8/mzaf_4002676889906514534.plus.aac.p.m4a"
+    var url: String? = "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/ac/c7/d1/acc7d13f-6634-495f-caf6-491eccb505e8/mzaf_4002676889906514534.plus.aac.p.m4a"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +36,19 @@ class PlayerActivity : Activity() {
 
         play.setOnClickListener {
             playbackControl()
+        }
+    }
+
+    private fun preparePlayer() {
+        mediaPlayer.setDataSource(url)
+        mediaPlayer.prepareAsync()
+        mediaPlayer.setOnPreparedListener {
+            play.isEnabled = true
+            playerState = STATE_PREPARED
+        }
+        mediaPlayer.setOnCompletionListener {
+            play.text = "PLAY"
+            playerState = STATE_PREPARED
         }
     }
 
@@ -59,18 +73,6 @@ class PlayerActivity : Activity() {
         }
     }
 
-    private fun preparePlayer() {
-        mediaPlayer.setDataSource(url)
-        mediaPlayer.prepareAsync()
-        mediaPlayer.setOnPreparedListener {
-            play.isEnabled = true
-            playerState = STATE_PREPARED
-        }
-        mediaPlayer.setOnCompletionListener {
-            play.text = "PLAY"
-            playerState = STATE_PREPARED
-        }
-    }
 
     private fun startPlayer() {
         mediaPlayer.start()
