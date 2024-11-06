@@ -1,5 +1,6 @@
 package com.example.testplayer
 
+import android.app.Activity
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.Button
@@ -8,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class PlayerActivity : AppCompatActivity() {
+class PlayerActivity : Activity() {
 
     companion object {
         private const val STATE_DEFAULT = 0
@@ -26,13 +27,7 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_player)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.player)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         play = findViewById(R.id.playButton)
 
